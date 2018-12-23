@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<script src="wasm_exec.js">
+</script>
+<script>
+		/*if (!WebAssembly.instantiateStreaming) { // polyfill
+			WebAssembly.instantiateStreaming = async (resp, importObject) => {
+				const source = await (await resp).arrayBuffer();
+				return await WebAssembly.instantiate(source, importObject);
+			};
+		}
+		const go = new Go();
+		let mod, inst;
+		WebAssembly.instantiateStreaming(fetch("test.wasm"), go.importObject).then((result) => {
+			mod = result.module;
+			inst = result.instance;
+			document.getElementById("runButton").disabled = false;
+		}).catch((err) => {
+			console.error(err, 'error');
+		});
+		async function run() {
+			console.log( inst,'insts' )
+			// console.clear();
+			await go.run(inst);
+			inst = await WebAssembly.instantiate(mod, go.importObject); // reset instance
+		}*/
+		if (!WebAssembly.instantiateStreaming) { // polyfill
+			WebAssembly.instantiateStreaming = async (resp, importObject) => {
+				const source = await (await resp).arrayBuffer();
+				return await WebAssembly.instantiate(source, importObject);
+			};
+		}
+		let run
+		(async function() {
+		  const go = new Go()
+		  const { instance } = await WebAssembly.instantiateStreaming(fetch("test.wasm"), go.importObject)
+		  run = go.run(instance)
+			document.getElementById("runButton").disabled = false;
+		})()
+		let printMessage
+		function displayMessage() {
+			console.log("Successful")
+		  // printMessage = callback
+		  document.getElementById("runButton").disabled = false
+		}
+	</script>
+
+<body>
+Heyo World
+<button onClick="displayMessage();" id="runButton" disabled>Run</button>
+</body>
+</html>
