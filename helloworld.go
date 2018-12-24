@@ -1,17 +1,18 @@
 package main
 
 import (
-	"fmt"
+	// "fmt"
 	"syscall/js"
 )
 
 func main() {
-	js.Global().Set("blackFridayFormat", js.NewCallback(format))
+	// js.Global().Set("blackFridayFormat", js.NewCallback(format))
 	// fmt.Println("Hello World!!!")
 	alert := js.Global().Get("alert")
-	alert.Invoke("Hello Wasm")
+	alert.Invoke("Hello... Wasm!!!")
 }
 
-func format(input js.Value) {
+/*func format(input js.Value) {
 	fmt.Println("Format Value")
 }
+*/
